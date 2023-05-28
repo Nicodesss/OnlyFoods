@@ -7,7 +7,6 @@ public class Runnable extends JPanel{
     static JFrame frame = new JFrame ("MyPanel");
 
     public static void main (String[] args) {
-        frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add (new MainPanel());
         frame.pack();
         frame.setVisible (true);

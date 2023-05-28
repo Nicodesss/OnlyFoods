@@ -16,6 +16,8 @@ public class MainPanel extends Runnable {
         bookingBtn = new JButton ("View Bookings");
 
         orderFoods = new JButton ("Order Food");
+        frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+
 
         //adjust size and set layout
         setPreferredSize (new Dimension(752, 457));
@@ -44,6 +46,11 @@ public class MainPanel extends Runnable {
 
         orderFoods.addActionListener(isClicked -> {
             OrderFood orderFoodFrame = new OrderFood();
+            runnable.frame.setVisible(false);
+        });
+
+        bookingBtn.addActionListener(isClicked -> {
+            ViewOrder viewOrder = new ViewOrder();
             runnable.frame.setVisible(false);
         });
     }
