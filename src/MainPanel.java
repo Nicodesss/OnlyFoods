@@ -7,10 +7,17 @@ public class MainPanel extends Runnable {
     private JButton makeReservationBtn;
     private JButton bookingBtn;
     private JButton orderFoods;
+    static OrderFood orderFoodFrame = new OrderFood();
+    static Reservation reservationPanel = new Reservation();
+    static ViewOrder viewOrder = new ViewOrder();
+
+
 
 
 
     public MainPanel(){
+
+
         jcomp1 = new JLabel ("OnlyFoods");
         makeReservationBtn = new JButton ("Make Reservation");
         bookingBtn = new JButton ("View Bookings");
@@ -38,19 +45,19 @@ public class MainPanel extends Runnable {
         orderFoods.setBounds (235, 245, 270, 55);
 
         makeReservationBtn.addActionListener(isClicked -> {
-            Reservation reservationPanel = new Reservation();
+            reservationPanel.showReservationFrame();
             runnable.frame.setVisible(false);
 
 
         });
 
         orderFoods.addActionListener(isClicked -> {
-            OrderFood orderFoodFrame = new OrderFood();
+            orderFoodFrame.showOrderFoodFrame();
             runnable.frame.setVisible(false);
         });
 
         bookingBtn.addActionListener(isClicked -> {
-            ViewOrder viewOrder = new ViewOrder();
+            viewOrder.showViewOrderFrame();
             runnable.frame.setVisible(false);
         });
     }

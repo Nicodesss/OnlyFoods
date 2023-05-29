@@ -11,6 +11,17 @@ import javax.swing.*;
  */
 public class OrderFood extends MainPanel {
 
+    static void hideOrderFoodFrame(){
+        orderFrame.setVisible(false);
+    }
+
+    public void showOrderFoodFrame(){
+        orderFrame.setVisible(true);
+
+    }
+    static JFrame orderFrame = new JFrame();
+
+
     /**
      * Creates new form restaurant
      */
@@ -27,7 +38,6 @@ public class OrderFood extends MainPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JFrame orderFrame = new JFrame();
 
         jLabel1 = new javax.swing.JLabel();
         totalButton = new javax.swing.JButton();
@@ -67,7 +77,7 @@ public class OrderFood extends MainPanel {
         totalcostofitemsTxtFd = new javax.swing.JTextField();
         demo = new javax.swing.JComboBox<>();
 
-//        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        orderFrame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("          ONLY FOODS ");
 
@@ -339,7 +349,6 @@ public class OrderFood extends MainPanel {
         });
 
         orderFrame.pack();
-        orderFrame.setVisible(true);
     }// </editor-fold>//GEN-END:initComponents
 
     private void totalcostofitemsTxtFdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalcostofitemsTxtFdActionPerformed
