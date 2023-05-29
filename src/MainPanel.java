@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 
 public class MainPanel extends Runnable {
@@ -9,14 +10,10 @@ public class MainPanel extends Runnable {
     private JButton orderFoods;
     static OrderFood orderFoodFrame = new OrderFood();
     static Reservation reservationPanel = new Reservation();
-
-
-
-
+    static ViewOrder viewOrder = new ViewOrder();
 
 
     public MainPanel(){
-
 
         jcomp1 = new JLabel ("OnlyFoods");
         makeReservationBtn = new JButton ("Make Reservation");
@@ -27,7 +24,7 @@ public class MainPanel extends Runnable {
 
 
         //adjust size and set layout
-        setPreferredSize (new Dimension(752, 457));
+        setPreferredSize (new Dimension(752, 400));
         setLayout (null);
 
         //add components
@@ -35,14 +32,10 @@ public class MainPanel extends Runnable {
         add (makeReservationBtn);
         add (bookingBtn);
 
-        add (orderFoods);
-
         //set component bounds (only needed by Absolute Positioning)
         jcomp1.setBounds (335, 55, 100, 25);
         makeReservationBtn.setBounds (235, 110, 270, 55);
-        bookingBtn.setBounds (235, 175, 270, 55);
-
-        orderFoods.setBounds (235, 245, 270, 55);
+        bookingBtn.setBounds (235, 200, 270, 55);
 
         makeReservationBtn.addActionListener(isClicked -> {
             reservationPanel.showReservationFrame();
@@ -51,16 +44,11 @@ public class MainPanel extends Runnable {
 
         });
 
-        orderFoods.addActionListener(isClicked -> {
-            orderFoodFrame.showOrderFoodFrame();
-            runnable.frame.setVisible(false);
-        });
-
         bookingBtn.addActionListener(isClicked -> {
-            ViewOrder viewOrder = new ViewOrder();
             viewOrder.showViewOrderFrame();
-
             runnable.frame.setVisible(false);
         });
     }
+
+
 }

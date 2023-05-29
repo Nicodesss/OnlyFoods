@@ -6,11 +6,9 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author User
- */
 public class ViewOrder extends MainPanel {
+    static int selectedRow;
+
     static JFrame viewOrderFrame = new JFrame();
     static void hideViewOrderFrame(){
         viewOrderFrame.setVisible(false);
@@ -18,60 +16,33 @@ public class ViewOrder extends MainPanel {
     }
     public void showViewOrderFrame(){
         viewOrderFrame.setVisible(true);
-
     }
-
-
-    /**
-     * Creates new form RestaurantTable
-     */
     public ViewOrder() {
         initComponents();
     }
 
-
     String[] columnNames = {"FIRST NAME", "LAST NAME", "EMAIL ADDRESS", "CHECK IN TIME/DATE", "NUMBER OF PEOPLE"};
 
-
-    private void initComponents() {
+    public void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        viewBtn = new javax.swing.JButton();
-        exitBtn = new javax.swing.JButton();
+
+        backBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
 
         viewOrderFrame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        table = new javax.swing.JTable(model);
 
-
-//        model.setRowCount(10);
-
-        jTable1 = new javax.swing.JTable(model);
-//
-//        Object [] row1 = {" "," ", " ", " ", " ", " "
-//        };
-//        model.addRow(row1);
-
-
-        jScrollPane1.setViewportView(jTable1);
-
+        jScrollPane1.setViewportView(table);
 
         jLabel1.setText("Table Reservations");
 
-        jLabel2.setText("Date:");
-
-        viewBtn.setText("View Order");
-
-        exitBtn.setText("Exit");
-
+        backBtn.setText("Back");
 
         deleteBtn.setText("Delete");
-
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(viewOrderFrame.getContentPane());
         viewOrderFrame.getContentPane().setLayout(layout);
@@ -81,19 +52,19 @@ public class ViewOrder extends MainPanel {
                                 .addGap(16, 16, 16)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jTextField2)
+
                                                 .addGap(18, 18, 18)
                                                 .addComponent(deleteBtn)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(viewBtn)
+
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(exitBtn))
+                                                .addComponent(backBtn))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                 .addComponent(jLabel1)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel2)
+
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        )
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -105,52 +76,79 @@ public class ViewOrder extends MainPanel {
                                 .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel1)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+
+                                )
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(41, 41, 41))
-        );
+                                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
 
-        exitBtn.addActionListener(isClicked -> {
+                                                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+
+                                .addGap(41, 41, 41))
+        ));
+        backBtn.addActionListener(isClicked -> {
             runnable.frame.setVisible(true);
             viewOrderFrame.setVisible(false);
         });
-        viewBtn.addActionListener(isCLicked ->{
+
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListSelectionModel selectionModel = table.getSelectionModel();
+        selectionModel.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    orderFoodFrame.showOrderFoodFrame();
+                    if (!(OrderFood.orderDataClasses[ViewOrder.selectedRow] == null)) {
+                        orderFoodFrame.chickenTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getChicken());
+                        orderFoodFrame.burgerTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getBurger());
+                        orderFoodFrame.steakTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getSteak());
+                        orderFoodFrame.FriesandOnionringsTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getFno());
+                        orderFoodFrame.BaconandEggTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getBng());
+                        orderFoodFrame.icedteaTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getIcedTea());
+                        orderFoodFrame.cokeTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getCoke());
+                        orderFoodFrame.lemonjuiceTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getLemon());
+                        orderFoodFrame.spriteTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getSprite());
+                        orderFoodFrame.orangeTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getOrange());
+                        orderFoodFrame.costofmealsTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getCom());
+                        orderFoodFrame.costofdrinksTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getCod());
+                        orderFoodFrame.totalcostofitemsTxtFd.setText(OrderFood.orderDataClasses[selectedRow].getTc());
+
+                    }
+
+                }
+            }
+
         });
 
         deleteBtn.addActionListener(isClicked ->{
-            model.removeRow(0);
+
+            try {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != 1) {
+                    model.removeRow(selectedRow);
+                }
+                }catch (ArrayIndexOutOfBoundsException e){
+
+            }
+
+
         });
 
         viewOrderFrame.pack();
-
-
-    }// </editor-fold>//GEN-END:initComponents
-
+    }
 
     void addInfos(String name, String lastName, String email, String checkIn, String numberOfPeople){
         model.addRow(new Object[]{name, lastName, email, checkIn, numberOfPeople});
-//        model.fireTableDataChanged();
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton viewBtn;
-    private javax.swing.JButton exitBtn;
+    private javax.swing.JButton backBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable table;
     public DefaultTableModel model = new DefaultTableModel(columnNames,0);
     // End of variables declaration//GEN-END:variables
 }
