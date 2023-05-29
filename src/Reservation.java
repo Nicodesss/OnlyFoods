@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class Reservation extends MainPanel {
-    ViewOrder viewOrder = new ViewOrder();
+
 
     static public void hideReservationFrame(){
         reservationFrame.setVisible(false);

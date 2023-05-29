@@ -9,7 +9,7 @@ public class MainPanel extends Runnable {
     private JButton orderFoods;
     static OrderFood orderFoodFrame = new OrderFood();
     static Reservation reservationPanel = new Reservation();
-    static ViewOrder viewOrder = new ViewOrder();
+
 
 
 
@@ -57,7 +57,9 @@ public class MainPanel extends Runnable {
         });
 
         bookingBtn.addActionListener(isClicked -> {
+            ViewOrder viewOrder = new ViewOrder();
             viewOrder.showViewOrderFrame();
+
             runnable.frame.setVisible(false);
         });
     }
